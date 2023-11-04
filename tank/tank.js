@@ -7,6 +7,7 @@ $(document).ready(function () { // 文档加载完
     upload: '/api/tank/upload',         // 上传
     down: '/api/tank/down'               // 导出
   };
+  let token = '';
 
   const request = function ({
                               url,
@@ -15,7 +16,6 @@ $(document).ready(function () { // 文档加载完
                               params,
                             }, success, fail)
   {
-    let token = 'my-token' // 获取token
     $.ajax({
       url,
       type,
@@ -45,7 +45,6 @@ $(document).ready(function () { // 文档加载完
                               params,
                             }, success, fail)
   {
-    let token = 'my-token' // 获取token
     $.ajax({
       url,
       type,
@@ -123,7 +122,6 @@ $(document).ready(function () { // 文档加载完
       console.log(res);
       loadData(res);
     })
-
 
     // test code
     let res = {
@@ -501,6 +499,10 @@ $(document).ready(function () { // 文档加载完
     }
   });
 
-  // 默认查询一次
-  query();
+
+  // 先做权限验证，再默认查询一次、
+  window.getToken(function (_token){
+    token = _token;
+    query();
+  });
 })

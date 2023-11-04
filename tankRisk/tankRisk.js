@@ -5,11 +5,11 @@ $(document).ready(function (){ // 文档加载完
     deleteTankRisk: '/api/tankrisk/delTankRisk', // 删除
     updateTankRisk: '/api/tankrisk/updateTankRisk', // 更新
     searchTankRiskById: '/api/tankrisk/searchTankRiskById', // 根据id获取item
-    searchTankByNo: ' /api/tank/searchTankByNo',  // 根据no查某一个储罐信息
+    searchTankByNo: '/api/tank/searchTankByNo',  // 根据no查某一个储罐信息
   };
 
   const request = function ({url, type, headers = {'Context-Type': 'application/json:charset=utf-8'},  params}, success){
-    let token = 'my-token' // 获取token
+
     $.ajax({
       url,
       type,
@@ -36,6 +36,7 @@ $(document).ready(function (){ // 文档加载完
   };
   let currentOperator = OPERATOR_TYPE.ADD;
   let process = 1;  // 标识对话框当前处于那个阶段
+  let token = null;
 
   // 重置查询条件
   $('#tankReset').click(function (){
@@ -894,9 +895,6 @@ $(document).ready(function (){ // 文档加载完
     }
   });
 
-  // 默认查询一次
-  query();
-
   // 弹窗里的查询按钮
   $('#tankRiskSearchDialog').bind('click', function (){
     let no = $('#my_no').textbox('getText');
@@ -924,5 +922,11 @@ $(document).ready(function (){ // 文档加载完
         type: res.type
       });
     })
+  });
+
+  // 先做权限验证，再默认查询一次、
+  window.getToken(function (_token){
+    token = _token;
+    query();
   });
 })
