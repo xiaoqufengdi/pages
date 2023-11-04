@@ -120,90 +120,91 @@ $(document).ready(function () { // 文档加载完
       params,
     }, function (res) {
       console.log(res);
-      loadData(res);
+      let content = res.content || { total: 0, list: []};
+      loadData(content);
     })
 
     // test code
-    let res = {
-      "total": 4,
-      "rows": [
-        {
-          "createBy": null,
-          "createTime": null,
-          "updateBy": null,
-          "updateTime": null,
-          "remark": null,
-          "id": 1,
-          "no": "1",
-          "depName": "百口泉采油厂",
-          "stationName": "注输联合站",
-          "processSystem": "原油处理系统",
-          "name": "1#净化油罐",
-          "year": "1997",
-          "material": "碳钢",
-          "volume": "3000",
-          "workingMedium": "净化油",
-          "type": "原油处理罐"
-        },
-        {
-          "createBy": null,
-          "createTime": null,
-          "updateBy": null,
-          "updateTime": null,
-          "remark": null,
-          "id": 2,
-          "no": "2",
-          "depName": "百口泉采油厂",
-          "stationName": "注输联合站",
-          "processSystem": "原油处理系统",
-          "name": "5#沉降罐",
-          "year": "1997",
-          "material": "碳钢",
-          "volume": "4000",
-          "workingMedium": "原油",
-          "type": "原油罐"
-        },
-        {
-          "createBy": null,
-          "createTime": null,
-          "updateBy": null,
-          "updateTime": null,
-          "remark": null,
-          "id": 3,
-          "no": "3",
-          "depName": "采油一厂",
-          "stationName": "1",
-          "processSystem": "1",
-          "name": "1",
-          "year": "1",
-          "material": "1",
-          "volume": "1",
-          "workingMedium": "1",
-          "type": "原油处理罐"
-        },
-        {
-          "createBy": null,
-          "createTime": null,
-          "updateBy": null,
-          "updateTime": null,
-          "remark": null,
-          "id": 4,
-          "no": "5",
-          "depName": "采气一厂",
-          "stationName": "2",
-          "processSystem": "2222",
-          "name": "22",
-          "year": "22",
-          "material": "2",
-          "volume": "22222222222",
-          "workingMedium": "222222222222",
-          "type": "原油处理罐"
-        }
-      ],
-      "code": 200,
-      "msg": "查询成功"
-    }
-    loadData(res);
+    // let res = {
+    //   "total": 4,
+    //   "rows": [
+    //     {
+    //       "createBy": null,
+    //       "createTime": null,
+    //       "updateBy": null,
+    //       "updateTime": null,
+    //       "remark": null,
+    //       "id": 1,
+    //       "no": "1",
+    //       "depName": "百口泉采油厂",
+    //       "stationName": "注输联合站",
+    //       "processSystem": "原油处理系统",
+    //       "name": "1#净化油罐",
+    //       "year": "1997",
+    //       "material": "碳钢",
+    //       "volume": "3000",
+    //       "workingMedium": "净化油",
+    //       "type": "原油处理罐"
+    //     },
+    //     {
+    //       "createBy": null,
+    //       "createTime": null,
+    //       "updateBy": null,
+    //       "updateTime": null,
+    //       "remark": null,
+    //       "id": 2,
+    //       "no": "2",
+    //       "depName": "百口泉采油厂",
+    //       "stationName": "注输联合站",
+    //       "processSystem": "原油处理系统",
+    //       "name": "5#沉降罐",
+    //       "year": "1997",
+    //       "material": "碳钢",
+    //       "volume": "4000",
+    //       "workingMedium": "原油",
+    //       "type": "原油罐"
+    //     },
+    //     {
+    //       "createBy": null,
+    //       "createTime": null,
+    //       "updateBy": null,
+    //       "updateTime": null,
+    //       "remark": null,
+    //       "id": 3,
+    //       "no": "3",
+    //       "depName": "采油一厂",
+    //       "stationName": "1",
+    //       "processSystem": "1",
+    //       "name": "1",
+    //       "year": "1",
+    //       "material": "1",
+    //       "volume": "1",
+    //       "workingMedium": "1",
+    //       "type": "原油处理罐"
+    //     },
+    //     {
+    //       "createBy": null,
+    //       "createTime": null,
+    //       "updateBy": null,
+    //       "updateTime": null,
+    //       "remark": null,
+    //       "id": 4,
+    //       "no": "5",
+    //       "depName": "采气一厂",
+    //       "stationName": "2",
+    //       "processSystem": "2222",
+    //       "name": "22",
+    //       "year": "22",
+    //       "material": "2",
+    //       "volume": "22222222222",
+    //       "workingMedium": "222222222222",
+    //       "type": "原油处理罐"
+    //     }
+    //   ],
+    //   "code": 200,
+    //   "msg": "查询成功"
+    // }
+    // loadData(res);
   }
 
   // 修改行
@@ -256,7 +257,7 @@ $(document).ready(function () { // 文档加载完
   // }
 
   // 加载数据到表格
-  function loadData(res) {
+  function loadData(content) {
     $('#tankDataGrid').datagrid({
       columns: [[
         {field: 'ck', checkbox: 'true'},
@@ -279,7 +280,7 @@ $(document).ready(function () { // 文档加载完
       ]],
       // width: 1100,
       height: 500,
-      data: res.rows,
+      data: content.list,
       toolbar: '#toolbar',
       pagination: true,
       selectOnCheck: true,
@@ -299,8 +300,8 @@ $(document).ready(function () { // 文档加载完
         query();
       },
       beforePageText: '第',//页数文本框前显示的汉字
-      afterPageText: `页 共 ${Math.ceil(res.total / pageSize)} 页`,
-      displayMsg: `当前显示 {from} - {to} 条记录 共 ${res.total} 条记录`,
+      afterPageText: `页 共 ${Math.ceil(content.total / pageSize)} 页`,
+      displayMsg: `当前显示 {from} - {to} 条记录 共 ${content.total} 条记录`,
     });
   }
 
@@ -471,32 +472,34 @@ $(document).ready(function () { // 文档加载完
 
   $('#tankExport').bind('click', function () {
     // 下载导出
-    let rows = $('#tankDataGrid').datagrid('getChecked');
-    if (rows.length) {
-      let row = rows[0];
-      let params = {
-        no: row.no,
-        depName: row.depName,
-        stationName: row.stationName,
-      }
-
-      request({
-        url: apiUrls.down,
-        type: 'GET',
-        params
-      }, function (response){
-        let link = document.createElement('a');
-        link.href = response.fileUrl; // 替换为服务器返回的导出文件 URL
-        link.download = response.fileName; // 替换为服务器返回的导出文件名
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }, function (error){
-        $.messager.alert('提示', '下载失败!');
-      })
-    } else {
-      $.messager.alert('提示', '请先选择一条记录');
+    let params = {};
+    let no = $('#no').textbox('getText');
+    if (no) {
+      params.no = no;
     }
+    let depName = $('#depName').textbox('getText');
+    if (depName) {
+      params.depName = depName;
+    }
+    let stationName = $('#stationName').textbox('getText');
+    if (stationName) {
+      params.stationName = stationName;
+    }
+
+    request({
+      url: apiUrls.down,
+      type: 'GET',
+      params
+    }, function (response){
+      let link = document.createElement('a');
+      link.href = response.fileUrl; // 替换为服务器返回的导出文件 URL
+      link.download = response.fileName; // 替换为服务器返回的导出文件名
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, function (error){
+      $.messager.alert('提示', '下载失败!');
+    })
   });
 
 

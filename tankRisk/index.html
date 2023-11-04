@@ -59,12 +59,12 @@
                 <label>站场名称:</label>
                 <input id="stationName" class="easyui-textbox" style="width:300px">
             </li>
-        </ul>
-        <ul class="tank-risk-search">
             <li>
                 <label>工艺系统:</label>
                 <input id="processSystem" class="easyui-textbox" style="width:300px">
             </li>
+        </ul>
+        <ul class="tank-risk-search">
             <li>
                 <label>储罐名称:</label>
                 <input id="name" class="easyui-textbox" style="width:300px">
@@ -73,8 +73,6 @@
                 <label>储罐介质:</label>
                 <input id="material" class="easyui-textbox" style="width:300px">
             </li>
-        </ul>
-        <ul class="tank-risk-search">
             <li>
                 <label>公称容积:</label>
                 <input id="volume" class="easyui-textbox" style="width:300px">
@@ -83,6 +81,8 @@
                 <label>工作介质:</label>
                 <input id="workingMedium" class="easyui-textbox" style="width:300px">
             </li>
+        </ul>
+        <ul class="tank-risk-search">
             <li>
                 <label title="按介质划分的储罐类型">按介质划分...:</label>
                 <select id="type" class="easyui-combobox" style="width:300px;">
@@ -93,8 +93,6 @@
                     <option value="成品油罐">成品油罐</option>
                 </select>
             </li>
-        </ul>
-        <ul class="tank-risk-search">
             <li>
                 <label>储罐风险等级:</label>
                 <select id="risk_level" class="easyui-combobox" data-options="readonly:false" style="width:300px;">
@@ -139,6 +137,8 @@
             <a id="tankRiskAdd" href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
             <a id="tankRiskEdit" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >编辑</a>
             <a id="tankRiskDelete" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+            <input id="tankRiskImport" class="easyui-filebox" data-options="buttonText: '选择文件', buttonAlign: 'left', prompt: '请选择文件', accept:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'" style="width: 200px;">
+            <a id="tankRiskExport" href="#" class="easyui-linkbutton" iconCls="icon-print" plain="true">导出</a>
         </div>
     </div>
     <div id="tankRiskDialog" style="display:none;">
