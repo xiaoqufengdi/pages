@@ -1,0 +1,14 @@
+.search li{
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+}
+.search li label{
+    font-size: 12px;
+}
+.search li .textbox{
+    width: 200px !important;
+}
+.search li .textbox .textbox-text{
+    width: 180px !important;
+}

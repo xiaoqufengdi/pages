@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>储罐风险评估</title>
+	<link rel="stylesheet" type="text/css" href="../css/easyui.css?v=0.0.11">
+	<link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <style>
+        ul.tank-risk-search {
+            margin-bottom: 20px;
+
+        }
+        ul.tank-risk-search  li {
+            width: 300px;
+            overflow: hidden;
+            text-align: right;
+        }
+        .tank-risk-search-date span.textbox{
+            width: 89px !important;
+        }
+
+        ul.tankRiskProcess li {
+            display: inline-block;
+            width:  16%;
+            /*150px;*/
+            padding: 15px;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+        }
+
+        ul.tankRiskProcess li .tankRiskProcessImg {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        ul.tankRiskProcess li .tankRiskProcessText{
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+	<div class="search" id="tb" style="padding:10px;height:auto">
+        <ul class="tank-risk-search">
+            <li>
+                <label>储罐编号:</label>
+                <input id="no" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label>二级单位名称:</label>
+                <input id="depName" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label>站场名称:</label>
+                <input id="stationName" class="easyui-textbox" style="width:300px">
+            </li>
+        </ul>
+        <ul class="tank-risk-search">
+            <li>
+                <label>工艺系统:</label>
+                <input id="processSystem" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label>储罐名称:</label>
+                <input id="name" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label>储罐介质:</label>
+                <input id="material" class="easyui-textbox" style="width:300px">
+            </li>
+        </ul>
+        <ul class="tank-risk-search">
+            <li>
+                <label>公称容积:</label>
+                <input id="volume" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label>工作介质:</label>
+                <input id="workingMedium" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label title="按介质划分的储罐类型">按介质划分...:</label>
+                <select id="type" class="easyui-combobox" style="width:300px;">
+                    <option value="">请选择</option>
+                    <option value="原油处理罐">原油处理罐</option>
+                    <option value="水处理罐">水处理罐</option>
+                    <option value="原油罐">原油罐</option>
+                    <option value="成品油罐">成品油罐</option>
+                </select>
+            </li>
+        </ul>
+        <ul class="tank-risk-search">
+            <li>
+                <label>储罐风险等级:</label>
+                <select id="risk_level" class="easyui-combobox" data-options="readonly:false" style="width:300px;">
+                    <option value="">请选择</option>
+                    <option value="低风险">低风险</option>
+                    <option value="中风险">中风险</option>
+                    <option value="中高风险">原油罐</option>
+                    <option value="高风险">高风险</option>
+                </select>
+            </li>
+            <li>
+                <label>评价人:</label>
+                <input id="evaluated_by" class="easyui-textbox" style="width:300px">
+            </li>
+            <li>
+                <label>审核人:</label>
+                <input id="reviewed_by" class="easyui-textbox" style="width:300px">
+            </li>
+        </ul>
+
+        <ul class="tank-risk-search">
+            <li class="tank-risk-search-date">
+                <label>评价时间:</label>
+                <div style="display:inline-block;width:200px">
+                    <input id="startDate" type="text" class="easyui-datebox">到
+                    <input id="endDate" type="text" class="easyui-datebox">
+                </div>
+            </li>
+            <li>
+                <div style="width:300px;text-align:center">
+                    <a href="#" id="tankRiskSearch" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询</a>
+                    <a href="#" id="tankRiskReset" class="easyui-linkbutton" iconCls="icon-redo" plain="true">重置</a>
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+    <div style="padding:10px;">
+        <table id="tankRiskDataGrid"></table>
+        <div id="toolbar">
+            <a id="tankRiskAdd" href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
+            <a id="tankRiskEdit" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >编辑</a>
+            <a id="tankRiskDelete" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+        </div>
+    </div>
+    <div id="tankRiskDialog" style="display:none;">
+        <ul class="tankRiskProcess">
+            <li>
+                <div class="tankRiskProcessImg">
+                    <img width="32" height="32" src="../images/1.png" alt="pic">
+                </div>
+                <div class="tankRiskProcessText">
+                    <span>储罐数据信息</span>
+                </div>
+            </li>
+            <li>
+                <div class="tankRiskProcessImg">
+                    <img width="32" height="32" src="../images/2.png" alt="pic">
+                </div>
+                <div class="tankRiskProcessText">
+                    <span>储罐数据信息</span>
+                </div>
+            </li>
+            <li>
+                <div class="tankRiskProcessImg">
+                    <img width="32" height="32" src="../images/3.png" alt="pic">
+                </div>
+                <div class="tankRiskProcessText">
+                    <span>储罐数据信息</span>
+                </div>
+            </li>
+            <li>
+                <div class="tankRiskProcessImg">
+                    <img width="32" height="32" src="../images/4.png" alt="pic">
+                </div>
+                <div class="tankRiskProcessText">
+                    <span>储罐风险判定</span>
+                </div>
+            </li>
+            <li>
+                <div class="tankRiskProcessImg">
+                    <img width="32" height="32" src="../images/5.png" alt="pic">
+                </div>
+                <div class="tankRiskProcessText">
+                    <span>储罐损伤综合评价</span>
+                </div>
+            </li>
+            <li>
+                <div class="tankRiskProcessImg">
+                    <img width="32" height="32" src="../images/6.png" alt="pic">
+                </div>
+                <div class="tankRiskProcessText">
+                    <span>站场管理因素评估</span>
+                </div>
+            </li>
+        </ul>
+        <!-- 第一个表单 -->
+        <div style="display: flex;justify-content:flex-start">
+            <form id="tankRiskForm" style="margin:10px;position:relative;width:calc(100% - 200px)">
+                <div style="margin-bottom:20px">
+                    <input id="my_no" class="easyui-textbox" name="no" style="width:100%;height:40px" data-options="label:'储罐序号:',required:true,missingMessage:'字段必填',prompt:'请输入储罐编号'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="depName" style="width:100%;height:40px" data-options="label:'二级单位名称:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入二级单位名称'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="stationName" style="width:100%;height:40px" data-options="label:'站场名称:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入站场名称'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="processSystem" style="width:100%;height:40px" data-options="label:'工艺系统:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入工艺系统'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="name" style="width:100%;height:40px" data-options="label:'储罐名称:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入储罐名称'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="year" style="width:100%;height:40px" data-options="label:'投用年份:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入投入年份'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="material" style="width:100%;height:40px" data-options="label:'储罐材质:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入储罐材质'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="volume" style="width:100%;height:40px" data-options="label:'公称容积（m3）:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入公称容积'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <input class="easyui-textbox" name="workingMedium" style="width:100%;height:40px" data-options="label:'工作介质:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入工作介质'">
+                </div>
+                <div style="margin-bottom:20px">
+                    <select class="easyui-combobox" name="type" data-options="label:'按介质划分的储罐类型:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请选择按介质划分的储罐类型'" style="width:100%;height:40px">
+                        <option value="原油处理罐">原油处理罐</option>
+                        <option value="水处理罐">水处理罐</option>
+                        <option value="原油罐">原油罐</option>
+                        <option value="成品油罐">成品油罐</option>
+                    </select>
+                </div>
+            </form>
+            <div style="padding:15px">
+                <a href="#" id="tankRiskSearchDialog" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询储罐</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.edatagrid.js"></script>
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="./tankRisk.js"></script>
+</body>
+</html>

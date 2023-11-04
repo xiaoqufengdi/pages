@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>储罐列表</title>
+	<link rel="stylesheet" type="text/css" href="../css/easyui.css?v=0.0.11">
+	<link rel="stylesheet" type="text/css" href="../css/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+
+</head>
+<body>
+	<div class="search" id="tb" style="padding:10px;height:auto">
+        <li>
+            <label>储罐编号:</label>
+            <input id="no" class="easyui-textbox" style="width:300px">
+        </li>
+        <li>
+            <label>二级单位名称:</label>
+            <input id="depName" class="easyui-textbox" style="width:300px">
+        </li>
+        <li>
+            <label>站场名称:</label>
+            <input id="stationName" class="easyui-textbox" style="width:300px">
+        </li>
+        <li>
+            <a href="#" id="tankSearch" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询</a>
+        </li>
+        <li>
+            <a href="#" id="tankReset" class="easyui-linkbutton" iconCls="icon-redo" plain="true">重置</a>
+        </li>
+    </div>
+    <div style="padding:10px;">
+        <table id="tankDataGrid"></table>
+        <div id="toolbar">
+            <a id="tankAdd" href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" >添加</a>
+            <a id="tankEdit" href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" >编辑</a>
+            <a id="tankDelete" href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+            <input id="tankImport" class="easyui-filebox" data-options="buttonText: '选择文件', buttonAlign: 'left', prompt: '请选择文件', accept:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'" style="width: 200px;">
+            <a id="tankExport" href="#" class="easyui-linkbutton" iconCls="icon-print" plain="true">导出</a>
+        </div>
+    </div>
+    <div id="tankDialog" style="display:none;">
+        <form id="tankForm" style="margin:10px;position:relative;">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="no" style="width:100%;height:40px" data-options="label:'储罐编号:',required:true,missingMessage:'字段必填',prompt:'请输入储罐编号'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="depName" style="width:100%;height:40px" data-options="label:'二级单位名称:',required:true,missingMessage:'字段必填',prompt:'请输入二级单位名称'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="stationName" style="width:100%;height:40px" data-options="label:'站场名称:',required:true,missingMessage:'字段必填',prompt:'请输入站场名称'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="processSystem" style="width:100%;height:40px" data-options="label:'工艺系统:',required:true,missingMessage:'字段必填',prompt:'请输入工艺系统'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="name" style="width:100%;height:40px" data-options="label:'储罐名称:',required:true,missingMessage:'字段必填',prompt:'请输入储罐名称'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="year" style="width:100%;height:40px" data-options="label:'投用年份:',required:true,missingMessage:'字段必填',prompt:'请输入投入年份'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="material" style="width:100%;height:40px" data-options="label:'储罐材质:',required:true,missingMessage:'字段必填',prompt:'请输入储罐材质'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="volume" style="width:100%;height:40px" data-options="label:'公称容积（m3）:',required:true,missingMessage:'字段必填',prompt:'请输入公称容积'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="workingMedium" style="width:100%;height:40px" data-options="label:'工作介质:',required:true,missingMessage:'字段必填',prompt:'请输入工作介质'">
+            </div>
+            <div style="margin-bottom:20px">
+                <select class="easyui-combobox" name="type" data-options="label:'按介质划分的储罐类型:',required:true,missingMessage:'字段必填',prompt:'请选择按介质划分的储罐类型'" style="width:100%;height:40px">
+                    <option value="原油处理罐">原油处理罐</option>
+                    <option value="水处理罐">水处理罐</option>
+                    <option value="原油罐">原油罐</option>
+                    <option value="成品油罐">成品油罐</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.edatagrid.js"></script>
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="./tank.js"></script>
+</body>
+</html>
