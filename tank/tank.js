@@ -1,12 +1,15 @@
 $(document).ready(function () { // 文档加载完
+  const baseUrl = '';  // 基础（ip+端口）地址 例如  http://11.71.250.15:84
   const apiUrls = {
-    searchTank: '/api/tank/searchTank',  // 请求储罐列表
-    addTank: '/api/tank/addTank',  // 新增
-    deleteTank: '/api/tank/delTank', // 删除
-    updateTank: '/api/tank/updateTank', // 更新
-    upload: '/api/tank/upload',         // 上传
-    down: '/api/tank/down'               // 导出
+    searchTank: `${baseUrl}/api/tank/searchTank`,  // 请求储罐列表
+    addTank: `${baseUrl}/api/tank/addTank`,  // 新增
+    deleteTank: `${baseUrl}/api/tank/delTank`, // 删除
+    updateTank: `${baseUrl}/api/tank/updateTank`, // 更新
+    upload: `${baseUrl}/api/tank/upload`,         // 上传
+    down: `${baseUrl}/api/tank/down`               // 导出
   };
+
+  const loginUrl = 'http://11.71.250.15:84/webPlatformGDWZ/XJYTGDYZCGL/Webpt_LogoutSuccess'; // 登录地址
   let token = '';
 
   const request = function ({
@@ -32,6 +35,11 @@ $(document).ready(function () { // 文档加载完
       },
       error: function (xhr, status, error) {
         console.log('error', error);
+        if(xhr.status === 403) { // 没有登录，跳转登录页面
+          $.messager.alert('提示','用户未登录，将跳转登录页！','info');
+          window.location.href = loginUrl;
+          return;
+        }
         if (fail instanceof Function) {
           fail(error);
         }
@@ -61,6 +69,11 @@ $(document).ready(function () { // 文档加载完
       },
       error: function (xhr, status, error) {
         console.log('error', error);
+        if(xhr.status === 403) { // 没有登录，跳转登录页面
+          $.messager.alert('提示','用户未登录，将跳转登录页！','info');
+          window.location.href = loginUrl;
+          return;
+        }
         if (fail instanceof Function) {
           fail(error);
         }
@@ -508,4 +521,6 @@ $(document).ready(function () { // 文档加载完
     token = _token;
     query();
   });
+  // query();
+
 })

@@ -1,17 +1,20 @@
 $(document).ready(function (){ // 文档加载完
+  const baseUrl = '';  // 基础（ip+端口）地址 例如  http://11.71.250.15:84
   const apiUrls = {
-    searchTankRisk: '/api/tankrisk/searchTankRisk',  // 请求储罐风险列表
-    addTankRisk: '/api/tankrisk/addTankRisk',  // 新增
-    deleteTankRisk: '/api/tankrisk/delTankRisk', // 删除
-    updateTankRisk: '/api/tankrisk/updateTankRisk', // 更新
-    searchTankRiskById: '/api/tankrisk/searchTankRiskById', // 根据id获取item
-    searchTankByNo: '/api/tank/searchTankByNo',  // 根据no查某一个储罐信息
-    upload: '/api/tank/upload',         // 上传
-    down: '/api/tank/down'               // 导出
+    searchTankRisk: `${baseUrl}/api/tankrisk/searchTankRisk`,  // 请求储罐风险列表
+    addTankRisk: `${baseUrl}/api/tankrisk/addTankRisk`,  // 新增
+    deleteTankRisk: `${baseUrl}/api/tankrisk/delTankRisk`, // 删除
+    updateTankRisk: `${baseUrl}/api/tankrisk/updateTankRisk`, // 更新
+    searchTankRiskById: `${baseUrl}/api/tankrisk/searchTankRiskById`, // 根据id获取item
+    searchTankByNo: `${baseUrl}/api/tank/searchTankByNo`,  // 根据no查某一个储罐信息
+    upload: `${baseUrl}/api/tank/upload`,         // 上传
+    down: `${baseUrl}/api/tank/down`               // 导出
   };
 
-  const request = function ({url, type, headers = {'Context-Type': 'application/json:charset=utf-8'},  params}, success){
+  const loginUrl = 'http://11.71.250.15:84/webPlatformGDWZ/XJYTGDYZCGL/Webpt_LogoutSuccess'; // 登录地址
+  let token = '';
 
+  const request = function ({url, type, headers = {'Context-Type': 'application/json:charset=utf-8'},  params}, success, fail){
     $.ajax({
       url,
       type,
@@ -24,6 +27,17 @@ $(document).ready(function (){ // 文档加载完
       success: function(data){
         if (success instanceof Function) {
           success(data);
+        }
+      },
+      error: function (xhr, status, error) {
+        console.log('error', error);
+        if(xhr.status === 403) { // 没有登录，跳转登录页面
+          $.messager.alert('提示','用户未登录，将跳转登录页！','info');
+          window.location.href = loginUrl;
+          return;
+        }
+        if (fail instanceof Function) {
+          fail(error);
         }
       }
     });
@@ -51,6 +65,11 @@ $(document).ready(function (){ // 文档加载完
       },
       error: function (xhr, status, error) {
         console.log('error', error);
+        if(xhr.status === 403) { // 用户未登录，跳转登录页面
+          $.messager.alert('提示','用户未登录，将跳转登录页！','info');
+          window.location.href = loginUrl;
+          return;
+        }
         if (fail instanceof Function) {
           fail(error);
         }
@@ -67,7 +86,7 @@ $(document).ready(function (){ // 文档加载完
   };
   let currentOperator = OPERATOR_TYPE.ADD;
   let process = 1;  // 标识对话框当前处于那个阶段
-  let token = null;
+
 
   // 重置查询条件
   $('#tankReset').click(function (){
