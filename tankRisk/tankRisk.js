@@ -194,7 +194,7 @@ $(document).ready(function (){ // 文档加载完
     // test code
     // let res = {
     //   "total": 5,
-    //   "rows": [
+    //   "list": [
     //     {
     //       "createBy": null,
     //       "createTime": "2023-05-25 15:58:49",
@@ -825,6 +825,9 @@ $(document).ready(function (){ // 文档加载完
       // tankDialog.dialog('destroy');
       tankDialog = null;
     }
+    let buttons = 11;
+
+
     let _tankDialog = $('#tankRiskDialog').dialog({
       title,
       top: 30,
@@ -832,28 +835,88 @@ $(document).ready(function (){ // 文档加载完
       height: 800,
       closed: true,
       cache: false,
-      iconCls: type === OPERATOR_TYPE.ADD ? 'icon-add': 'icon-edit',
-      resizable:true,
+      iconCls: type === OPERATOR_TYPE.ADD ? 'icon-add' : 'icon-edit',
+      resizable: true,
       modal: true,
       closable: false,
-      style: { padding: '10px' },
-      buttons:[{
-        text:'下一步',
-        iconCls:'icon-ok',
-        handler:function(){
-          let bool = $('#tankRiskForm').form('validate');
+      style: {padding: '10px'},
+      buttons: [{
+        text: '上一步',
+        iconCls: 'icon-back',
+        handler: function () {
+          if (process === 1) {
+            $.messager.alert('提示','已经在第一步了！','info');
+            return;
+          }
+          process = process - 1;
+          showOrHideForm(process);
+        }
+      },{
+        text: '下一步',
+        iconCls: 'icon-ok',
+        handler: function () {
+          if(process < 6) {
+            let bool = formValidate(process);  // 表单
+            if (bool) {
+              process = process + 1;
+              showOrHideForm(process);
+            } else {
+              console.log('校验未通过');
+              $.messager.alert('提示','校验未通过，请检查表单填写值！','info');
+            }
+
+            return;
+          }
+          // 填完了表单汇总数据
+          let bool = formValidate(process);  // 表单
           if (bool) {
-            let params = decodeURI(($('#tankRiskForm').serialize()));
-            console.log('params', params);
-            if(type === OPERATOR_TYPE.ADD) { // 新增
+            // 第一个表单数据
+            let queryString = decodeURI($('#tankRiskForm').serialize());
+            let params1 = getFormValues(queryString);
+            console.log('params', params1);
+            // 第二个表单
+            let queryString2 = decodeURI($('#secondForm').serialize());
+            let params2 = getFormValues(queryString2);
+            console.log('params', params2);
+
+            // 第三个表单
+            let queryString3 = decodeURI($('#thirdForm').serialize());
+            let params3 = getFormValues(queryString3);
+            console.log('params', params3);
+
+            // 第四个表单
+            let queryString4 = decodeURI($('#fourthForm').serialize());
+            let params4 = getFormValues(queryString4);
+            console.log('params', params4);
+
+            // 第五个表单
+            let queryString5 = decodeURI($('#fifthForm').serialize());
+            let params5 = getFormValues(queryString5);
+            console.log('params', params5);
+
+            // 第六个表单
+            let queryString6 = decodeURI($('#sixForm').serialize());
+            let params6 = getFormValues(queryString6);
+            console.log('params', params5);
+            // 汇总各个表单数据
+            let params = {
+              ...params1,
+              ...params2,
+              ...params3,
+              ...params4,
+              ...params5,
+              ...params6
+            }
+
+            if (type === OPERATOR_TYPE.ADD) { // 新增
               request({
                 url: apiUrls.addTank,
                 type: 'POST',
-                headers:{
+                headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 params
-              }, ()=>{
+              }, () => {
                 $.messager.alert('提示', '添加成功!');
                 query();
               })
@@ -861,11 +924,11 @@ $(document).ready(function (){ // 文档加载完
               request({
                 url: apiUrls.updateTank,
                 type: 'POST',
-                headers:{
+                headers: {
                   'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 params
-              }, ()=>{
+              }, () => {
                 $.messager.alert('提示', '修改成功!');
                 query();
               })
@@ -875,10 +938,10 @@ $(document).ready(function (){ // 文档加载完
             $('#tankRiskForm').form('clear')
           }
         }
-      },{
-        text:'取消',
+      }, {
+        text: '取消',
         iconCls: 'icon-cancel',
-        handler:function(){
+        handler: function () {
           tankDialog.dialog('close');
         }
       }]
@@ -893,13 +956,14 @@ $(document).ready(function (){ // 文档加载完
     console.log('rows', rows);
     if(rows.length) {
       if (!tankDialog || currentOperator === OPERATOR_TYPE.ADD) {
-        tankDialog = createDialog({ title: '添加储罐风险评估', type: 'revise'});
+        tankDialog = createDialog({ title: '编辑储罐风险评估', type: 'revise'});
       }
       console.log('tankDialog', tankDialog);
       currentOperator = OPERATOR_TYPE.REVISE;
       tankDialog.dialog('open');
       let row = rows[0];
       console.log('row', row);
+      // 读取第一个表单数据反显
       $('#tankRiskForm').form('load', {
         id: row.id,
         no: row.no,
@@ -913,6 +977,21 @@ $(document).ready(function (){ // 文档加载完
         workingMedium: row.workingMedium,
         type: row.type
       });
+
+      // 读取第二个表单数据反显
+      $('#secondForm').form('load', {
+        sxzjpd: row.sxzjpd,
+      });
+      // 里面的选择项赋值
+      $("input[name='sfysjsgzl'][value='" + row.sfysjsgzl + "']").prop("checked", "checked").click();
+      $("input[name='sfkzgyxjy'][value='" + row.sfkzgyxjy + "']").prop("checked", "checked").click();
+      $("input[name='synxsfcgty'][value='" + row.synxsfcgty + "']").prop("checked", "checked").click();
+      $("input[name='sfczyzwt'][value='" + row.sfczyzwt + "']").prop("checked", "checked").click();
+      $("input[name='sfymydx'][value='" + row.sfymydx + "']").prop("checked", "checked").click();
+      $("input[name='sfczjckl'][value='" + row.sfczjckl + "']").prop("checked", "checked").click();
+
+      // TODO: 同理-读取第三、四、五、六个表单数据反显
+
       updateImgStyle(process);
     } else {
       $.messager.alert('提示', '请选择一条记录修改');
@@ -1027,6 +1106,137 @@ $(document).ready(function (){ // 文档加载完
     })
   });
 
+  // 校验各个表单的值
+  function formValidate(step) {
+    console.log('formValidate', step);
+    let bool = false;
+    switch(step) {
+      case 1:
+        bool = $('#tankRiskForm').form('validate');
+        break;
+      case 2:
+        bool = $('#secondForm').form('validate');
+        break;
+      case 3:
+        bool = $('#thirdForm').form('validate');
+        break;
+      case 4:
+        bool = $('#fourthForm').form('validate');
+        break;
+      case 5:
+        bool = $('#fifthForm').form('validate');
+        break;
+      case 6:
+        bool = $('#sixForm').form('validate');
+        break;
+      default:
+    }
+
+    return bool;
+  }
+
+  // 根据当前的编辑阶段，显示隐藏表单,比如在第一个阶段，第一个表单显示，其余表单隐藏
+  function showOrHideForm (step) {
+    updateImgStyle(step);
+
+    switch(step) {
+      case 1:  // 第一步
+        $('#firstForm').show();
+        $('#secondForm').hide();
+        $('#thirdForm').hide();
+        $('#fourthForm').hide();
+        $('#fifthForm').hide();
+        $('#sixForm').hide();
+        break;
+
+      case 2: // 第二步
+        $('#firstForm').hide();
+        $('#secondForm').show();
+        $('#thirdForm').hide();
+        $('#fourthForm').hide();
+        $('#fifthForm').hide();
+        $('#sixForm').hide();
+        break;
+
+      case 3: // 第三步
+        $('#firstForm').hide();
+        $('#secondForm').hide();
+        $('#thirdForm').show();
+        $('#fourthForm').hide();
+        $('#fifthForm').hide();
+        $('#sixForm').hide();
+        break;
+
+      case 4: // 第四步
+        $('#firstForm').hide();
+        $('#secondForm').hide();
+        $('#thirdForm').hide();
+        $('#fourthForm').show();
+        $('#fifthForm').hide();
+        $('#sixForm').hide();
+        break;
+
+      case 5: // 第五部
+        $('#firstForm').hide();
+        $('#secondForm').hide();
+        $('#thirdForm').hide();
+        $('#fourthForm').hide();
+        $('#fifthForm').show();
+        $('#sixForm').hide();
+        break;
+
+      case 6: // 第六部
+        $('#firstForm').hide();
+        $('#secondForm').hide();
+        $('#thirdForm').hide();
+        $('#fourthForm').hide();
+        $('#fifthForm').hide();
+        $('#sixForm').show();
+        break;
+      default:
+    }
+  }
+
+  // 添加表单验证
+  $('#secondForm').validatebox(); // 初始化表单验证
+  $('#thirdForm').validatebox();
+  $('#fourthForm').validatebox();
+  $('#fifthForm').validatebox();
+  $('#sixForm').validatebox();
+  $.extend($.fn.validatebox.defaults.rules, {
+    checkRadioGroup: { // 自定义校验规则
+      validator: function(value, param){
+        let name = $(this).attr('radiobuttonname');
+        let $radios = $("input[name='" + name + "']:checked");
+        return $radios.length > 0; // 至少有一个选中
+      },
+      message: '请选中一个' // 校验不通过时的提示信息
+    }
+  });
+
+  $('.easyui-radiobutton').each(function() {
+    let groupName = $(this).attr('name');
+    $(this).validatebox({
+      required: true,
+      validType: 'checkRadioGroup[' + groupName + ']'
+    });
+  });
+
+  // 从表单取值的字符串里解析出对象
+  // 'no=1&depName=百口泉采油厂&stationName=注输联合站&processSystem=原油处理系统&name=1%23净化油罐&year=1997&material=碳钢&volume=3000&workingMedium=净化油&type=原油处理罐'
+  function getFormValues(queryString) {
+    let params = {};
+    let queryParams = queryString.split('&');
+    for (let i = 0; i < queryParams.length; i++) {
+      let param = queryParams[i].split('=');
+      let key = decodeURIComponent(param[0]);
+      let value = decodeURIComponent(param[1]);
+      params[key] = value;
+    }
+    return params;
+  }
+
+
 
   // 先做权限验证，再默认查询一次、
   window.getToken(function (_token){
@@ -1034,4 +1244,5 @@ $(document).ready(function (){ // 文档加载完
     query();
   });
 
+  // query();
 })

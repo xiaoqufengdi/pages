@@ -42,6 +42,28 @@
             display: flex;
             justify-content: center;
         }
+
+        .radiobutton{
+            width: 25px !important;
+            height: 25px !important;
+        }
+
+
+        #tankRiskDialog .form-item>label:first-child{
+            display: inline-block;
+            width: 300px;
+            text-align: right;
+
+        }
+        #tankRiskDialog .form-item .textbox-label{
+            padding-left: 15px;
+        }
+
+        .secondForm-tooltip, .secondForm-tooltip1, .secondForm-tooltip2, .secondForm-tooltip3, .secondForm-tooltip4, .secondForm-tooltip5, .secondForm-tooltip6 {
+            padding: 10px;
+            line-height: 28px;
+        }
+
     </style>
 </head>
 <body>
@@ -193,37 +215,37 @@
             </li>
         </ul>
         <!-- 第一个表单 -->
-        <div style="display: flex;justify-content:flex-start">
+        <div id="firstForm" style="display: flex;justify-content:flex-start">
             <form id="tankRiskForm" style="margin:10px;position:relative;width:calc(100% - 200px)">
                 <div style="margin-bottom:20px">
                     <input id="my_no" class="easyui-textbox" name="no" style="width:100%;height:40px" data-options="label:'储罐序号:',required:true,missingMessage:'字段必填',prompt:'请输入储罐编号'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="depName" style="width:100%;height:40px" data-options="label:'二级单位名称:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入二级单位名称'">
+                    <input class="easyui-textbox" name="depName" style="width:100%;height:40px" data-options="label:'二级单位名称:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入二级单位名称'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="stationName" style="width:100%;height:40px" data-options="label:'站场名称:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入站场名称'">
+                    <input class="easyui-textbox" name="stationName" style="width:100%;height:40px" data-options="label:'站场名称:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入站场名称'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="processSystem" style="width:100%;height:40px" data-options="label:'工艺系统:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入工艺系统'">
+                    <input class="easyui-textbox" name="processSystem" style="width:100%;height:40px" data-options="label:'工艺系统:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入工艺系统'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="name" style="width:100%;height:40px" data-options="label:'储罐名称:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入储罐名称'">
+                    <input class="easyui-textbox" name="name" style="width:100%;height:40px" data-options="label:'储罐名称:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入储罐名称'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="year" style="width:100%;height:40px" data-options="label:'投用年份:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入投入年份'">
+                    <input class="easyui-textbox" name="year" style="width:100%;height:40px" data-options="label:'投用年份:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入投入年份'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="material" style="width:100%;height:40px" data-options="label:'储罐材质:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入储罐材质'">
+                    <input class="easyui-textbox" name="material" style="width:100%;height:40px" data-options="label:'储罐材质:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入储罐材质'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="volume" style="width:100%;height:40px" data-options="label:'公称容积（m3）:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入公称容积'">
+                    <input class="easyui-textbox" name="volume" style="width:100%;height:40px" data-options="label:'公称容积（m3）:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入公称容积'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <input class="easyui-textbox" name="workingMedium" style="width:100%;height:40px" data-options="label:'工作介质:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请输入工作介质'">
+                    <input class="easyui-textbox" name="workingMedium" style="width:100%;height:40px" data-options="label:'工作介质:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请输入工作介质'">
                 </div>
                 <div style="margin-bottom:20px">
-                    <select class="easyui-combobox" name="type" data-options="label:'按介质划分的储罐类型:',required:true,missingMessage:'字段必填',disabled:true,prompt:'请选择按介质划分的储罐类型'" style="width:100%;height:40px">
+                    <select class="easyui-combobox" name="type" data-options="label:'按介质划分的储罐类型:',required:true,missingMessage:'字段必填',readonly:true,prompt:'请选择按介质划分的储罐类型'" style="width:100%;height:40px">
                         <option value="原油处理罐">原油处理罐</option>
                         <option value="水处理罐">水处理罐</option>
                         <option value="原油罐">原油罐</option>
@@ -235,6 +257,146 @@
                 <a href="#" id="tankRiskSearchDialog" class="easyui-linkbutton" iconCls="icon-search" plain="true">查询储罐</a>
             </div>
         </div>
+
+        <!-- 第二个表单 -->
+        <form id="secondForm" style="display:none;padding:10px;position:relative;width:100%;">
+            <div class="form-item" style="margin-bottom:20px">
+                <label>是否有设计、施工资料:</label>
+                <a href="javascript:void(0)" class="easyui-tooltip" data-options="content:function(){
+                  	return $('.secondForm-tooltip');
+                }">
+                    <input class="easyui-radiobutton" name="sfysjsgzl" style="width:40px;height:40px;margin-right:10px;" data-options="label:'是',value:'是',labelPosition:'after',required:true,missingMessage:'字段必填',prompt:'请选择'">
+                    <input class="easyui-radiobutton" name="sfysjsgzl" style="width:40px;height:40px" data-options="label:'否',value:'否',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                </a>
+            </div>
+            <div class="form-item" style="margin-bottom:20px">
+                <label>是否开展过有效检验:</label>
+                <a href="javascript:void(0)" class="easyui-tooltip" data-options="content:function(){
+                  	return $('.secondForm-tooltip2');
+                }">
+                    <input class="easyui-radiobutton" name="sfkzgyxjy" style="width:40px;height:40px;margin-right:10px;" data-options="label:'是',value:'是',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                    <input class="easyui-radiobutton" name="sfkzgyxjy" style="width:40px;height:40px" data-options="label:'否',value:'否',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                </a>
+            </div>
+            <div class="form-item" style="margin-bottom:20px">
+                <label>使用年限是否超过10年:</label>
+                <a href="javascript:void(0)" class="easyui-tooltip" data-options="content:function(){
+                  	return $('.secondForm-tooltip3');
+                }">
+                    <input class="easyui-radiobutton" name="synxsfcgty" style="width:40px;height:40px;margin-right:10px;" data-options="label:'是',value:'是',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                    <input class="easyui-radiobutton" name="synxsfcgty" style="width:40px;height:40px" data-options="label:'否',value:'否',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                </a>
+            </div>
+            <div class="form-item relate1" style="margin-bottom:20px">
+                <label>底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题:</label>
+                <a href="javascript:void(0)" class="easyui-tooltip" data-options="content:function(){
+                  	return $('.secondForm-tooltip4');
+                }">
+                    <input class="easyui-radiobutton" name="sfczyzwt"  data-options="label:'是',value:'是',labelPosition:'after',required:true,missingMessage:'字段必填',prompt:'请选择'">
+                    <input class="easyui-radiobutton" name="sfczyzwt"  data-options="label:'否',value:'否',labelPosition:'after',required:true,missingMessage:'字段必填',prompt:'请选择'">
+                </a>
+            </div>
+            <div class="form-item relate2" style="margin-bottom:20px">
+                <label>底板、壁板和顶板是否出现多次破损补漏，一直没有大修更换:</label>
+                <a href="javascript:void(0)" class="easyui-tooltip" data-options="content:function(){
+                  	return $('.secondForm-tooltip5');
+                }">
+                    <input class="easyui-radiobutton" name="sfymydx" style="width:40px;height:40px;margin-right:10px;" data-options="label:'是',value:'是',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                    <input class="easyui-radiobutton" name="sfymydx" style="width:40px;height:40px" data-options="label:'否',value:'否',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                </a>
+            </div>
+            <div class="form-item relate3" style="margin-bottom:20px">
+                <label>是否存在基础开裂:</label>
+                <a href="javascript:void(0)" class="easyui-tooltip" data-options="content:function(){
+                  	return $('.secondForm-tooltip6');
+                }">
+                    <input class="easyui-radiobutton" name="sfczjckl" style="width:40px;height:40px;margin-right:10px;" data-options="label:'是',value:'是',labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                    <input class="easyui-radiobutton" name="sfczjckl" style="width:40px;height:40px" data-options="label:'否',value:'否', required:true,labelPosition:'after',missingMessage:'字段必填',prompt:'请选择'">
+                </a>
+            </div>
+            <div class="form-item" style="margin-bottom:20px">
+                <label>风险直接判定:</label>
+                <input class="easyui-textbox" name="sxzjpd" style="width:300px;height:40px" data-options="required:false" >
+            </div>
+
+            <!-- tooltip 悬浮提示信息 -->
+            <div style="display:none">
+                <p class="secondForm-tooltip">
+                    风险直接判定说明：<br/>
+                    1.储罐设计、施工资料主要指是否有储罐设计竣工图纸资料；建议通过查阅工程档案确定，并注意保存；<br/>
+                    2.储罐有效检验是指对储罐内部进行过有效性在中度有效以上等级的检验；<br/>
+                    3.”底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题“是指储罐是否存在影响安全的重大缺陷；<br/>
+                    4.一旦储罐直接判定为高风险，可跳过后续的详细指标评价打分；<br/>
+                    5.直接判定储罐高风险的条件发生改变后，应及时进行更新，对储罐风险进行详细指标评价打分。<br/>
+                </p>
+                <p class="secondForm-tooltip2">
+                    风险直接判定说明：<br/>
+                    1.储罐设计、施工资料主要指是否有储罐设计竣工图纸资料；建议通过查阅工程档案确定，并注意保存；<br/>
+                    2.储罐有效检验是指对储罐内部进行过有效性在中度有效以上等级的检验；<br/>
+                    3.”底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题“是指储罐是否存在影响安全的重大缺陷；<br/>
+                    4.一旦储罐直接判定为高风险，可跳过后续的详细指标评价打分；<br/>
+                    5.直接判定储罐高风险的条件发生改变后，应及时进行更新，对储罐风险进行详细指标评价打分。<br/>
+                </p>
+                <p class="secondForm-tooltip3">
+                    风险直接判定说明：<br/>
+                    1.储罐设计、施工资料主要指是否有储罐设计竣工图纸资料；建议通过查阅工程档案确定，并注意保存；<br/>
+                    2.储罐有效检验是指对储罐内部进行过有效性在中度有效以上等级的检验；<br/>
+                    3.”底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题“是指储罐是否存在影响安全的重大缺陷；<br/>
+                    4.一旦储罐直接判定为高风险，可跳过后续的详细指标评价打分；<br/>
+                    5.直接判定储罐高风险的条件发生改变后，应及时进行更新，对储罐风险进行详细指标评价打分。<br/>
+                </p>
+                <p class="secondForm-tooltip4">
+                    风险直接判定说明：<br/>
+                    1.储罐设计、施工资料主要指是否有储罐设计竣工图纸资料；建议通过查阅工程档案确定，并注意保存；<br/>
+                    2.储罐有效检验是指对储罐内部进行过有效性在中度有效以上等级的检验；<br/>
+                    3.”底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题“是指储罐是否存在影响安全的重大缺陷；<br/>
+                    4.一旦储罐直接判定为高风险，可跳过后续的详细指标评价打分；<br/>
+                    5.直接判定储罐高风险的条件发生改变后，应及时进行更新，对储罐风险进行详细指标评价打分。<br/>
+                </p>
+                <p class="secondForm-tooltip5">
+                    风险直接判定说明：<br/>
+                    1.储罐设计、施工资料主要指是否有储罐设计竣工图纸资料；建议通过查阅工程档案确定，并注意保存；<br/>
+                    2.储罐有效检验是指对储罐内部进行过有效性在中度有效以上等级的检验；<br/>
+                    3.”底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题“是指储罐是否存在影响安全的重大缺陷；<br/>
+                    4.一旦储罐直接判定为高风险，可跳过后续的详细指标评价打分；<br/>
+                    5.直接判定储罐高风险的条件发生改变后，应及时进行更新，对储罐风险进行详细指标评价打分。<br/>
+                </p>
+                <p class="secondForm-tooltip6">
+                    风险直接判定说明：<br/>
+                    1.储罐设计、施工资料主要指是否有储罐设计竣工图纸资料；建议通过查阅工程档案确定，并注意保存；<br/>
+                    2.储罐有效检验是指对储罐内部进行过有效性在中度有效以上等级的检验；<br/>
+                    3.”底板、壁板和顶板当前是否存在开裂、凹陷变形、渗漏、穿孔等严重问题“是指储罐是否存在影响安全的重大缺陷；<br/>
+                    4.一旦储罐直接判定为高风险，可跳过后续的详细指标评价打分；<br/>
+                    5.直接判定储罐高风险的条件发生改变后，应及时进行更新，对储罐风险进行详细指标评价打分。<br/>
+                </p>
+            </div>
+        </form>
+
+        <!-- 第三个表单 -->
+        <form id="thirdForm" style="display:none;padding:10px;position:relative;width:100%;">
+            <div class="form-item" style="margin-bottom:20px">
+                <label>底板厚度减薄情况:</label>
+                <input class="easyui-radiobutton" name="db_hdjbqk" style="width:40px;height:40px;margin-right:10px;" data-options="label:'10',value:10,labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                <input class="easyui-radiobutton" name="db_hdjbqk" style="width:40px;height:40px" data-options="label:'60',value:60,labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+                <input class="easyui-radiobutton" name="db_hdjbqk" style="width:40px;height:40px" data-options="label:'100',value:100,labelPosition:'after', required:true,missingMessage:'字段必填',prompt:'请选择'">
+
+            </div>
+
+        </form>
+        <!-- 第四个表单 -->
+        <form id="fourthForm" style="display:none;padding:10px;position:relative;width:100%;">
+
+        </form>
+        <!-- 第五个表单 -->
+        <form id="fifthForm" style="display:none;padding:10px;position:relative;width:100%;">
+
+        </form>
+        <!-- 第六个表单 -->
+        <form id="sixForm" style="display:none;padding:10px;position:relative;width:100%;">
+
+        </form>
+
+
     </div>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
